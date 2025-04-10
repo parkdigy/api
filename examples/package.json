@@ -5,10 +5,9 @@
     "reinstall-module": "rm -rf node_modules && rm -f package-lock.json && npm i"
   },
   "devDependencies": {
-    "@pdg/api": "file:..",
-    "@pdg/util": "^1.0.22",
-    "axios": "^1.6.8",
-    "tsx": "^4.9.3",
-    "typescript": "^5.4.5"
+    "@pdg/util": "^1.0.23",
+    "axios": "^1.8.4",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
   }
 }
