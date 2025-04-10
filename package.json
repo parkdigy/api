@@ -23,7 +23,7 @@
   "scripts": {
     "test:get": "cd examples && npm run test:get",
     "build": "rollup -c --bundleConfigAsCjs",
-    "pub": "nvm use && npm i && npm run build && npm publish --access=public && rm ./.git/hooks/pre-commit",
+    "pub": "npm i && npm run build && npm publish --access=public && rm ./.git/hooks/pre-commit",
     "lint": "eslint './src/**/*.ts'",
     "reinstall-module": "rm -rf node_modules && rm -f package-lock.json && npm i"
   },
