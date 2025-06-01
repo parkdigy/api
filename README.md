@@ -4,5 +4,5 @@
 
 ## 설치
 ```
-npm install -D @pdg/api
+npm install -D @pdg/api axios
 ```

@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig, Method } from 'axios';
 import { ApiError, ApiRequestData, ApiOption, ApiRequestOption, ApiRequestConfig } from './Api.types';
-import { Dict, notEmpty, urlJoin } from '@pdg/util';
 
 const AxiosCreate = axios.create ? axios.create : require('axios').default?.create;
 
@@ -60,7 +59,7 @@ class Api<T = any, D extends ApiRequestData = {}> {
       if (data) {
         if (method === 'get') {
           if (notEmpty(data)) {
-            const finalData: Dict = {};
+            const finalData: ApiRequestData = {};
             finalData[this.option.timeParamName] = new Date().getTime();
             for (const key in data) {
               if (data[key] != null) {
@@ -74,7 +73,7 @@ class Api<T = any, D extends ApiRequestData = {}> {
             data.append(this.option.timeParamName, `${new Date().getTime()}`);
             requestConfig.data = data;
           } else {
-            const finalData: Dict = { ...data };
+            const finalData: ApiRequestData = { ...data };
             finalData[this.option.timeParamName] = new Date().getTime();
             requestConfig.data = finalData as D;
           }
@@ -149,3 +148,46 @@ class Api<T = any, D extends ApiRequestData = {}> {
 }
 
 export default Api;
+
+/********************************************************************************************************************
+ * empty
+ * ******************************************************************************************************************/
+function empty<T>(v: T): v is Exclude<T, NonNullable<T>> {
+  let result = false;
+  if (v == null) {
+    result = true;
+  } else if (typeof v === 'string') {
+    result = v === '';
+  } else if (typeof v === 'object') {
+    if (Array.isArray(v)) {
+      result = v.length === 0;
+    } else if (!(v instanceof Date)) {
+      result = Object.entries(v).length === 0;
+    }
+  }
+  return result;
+}
+
+/********************************************************************************************************************
+ * notEmpty
+ * ******************************************************************************************************************/
+function notEmpty<T>(v: T): v is NonNullable<T> {
+  return !empty(v);
+}
+
+/********************************************************************************************************************
+ * urlJoin
+ * ******************************************************************************************************************/
+function urlJoin(...parts: string[]): string {
+  return parts.reduce((acc, part) => {
+    if (acc === '') {
+      return part;
+    } else if (part.startsWith('?')) {
+      return `${acc}${part}`;
+    } else if (acc.endsWith('/')) {
+      return `${acc}${part.startsWith('/') ? part.substring(1) : part}`;
+    } else {
+      return `${acc}${part.startsWith('/') ? part : `/${part}`}`;
+    }
+  });
+}

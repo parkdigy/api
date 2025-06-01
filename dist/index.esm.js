@@ -1,4 +1,4 @@
-import axios from'axios';import {urlJoin,notEmpty}from'@pdg/util';/******************************************************************************
+import axios from'axios';/******************************************************************************
 Copyright (c) Microsoft Corporation.
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -229,4 +229,54 @@ var Api = /** @class */ (function () {
         return this.run('delete', path, data, option);
     };
     return Api;
-}());export{Api,ApiError};
+}());
+/********************************************************************************************************************
+ * empty
+ * ******************************************************************************************************************/
+function empty(v) {
+    var result = false;
+    if (v == null) {
+        result = true;
+    }
+    else if (typeof v === 'string') {
+        result = v === '';
+    }
+    else if (typeof v === 'object') {
+        if (Array.isArray(v)) {
+            result = v.length === 0;
+        }
+        else if (!(v instanceof Date)) {
+            result = Object.entries(v).length === 0;
+        }
+    }
+    return result;
+}
+/********************************************************************************************************************
+ * notEmpty
+ * ******************************************************************************************************************/
+function notEmpty(v) {
+    return !empty(v);
+}
+/********************************************************************************************************************
+ * urlJoin
+ * ******************************************************************************************************************/
+function urlJoin() {
+    var parts = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        parts[_i] = arguments[_i];
+    }
+    return parts.reduce(function (acc, part) {
+        if (acc === '') {
+            return part;
+        }
+        else if (part.startsWith('?')) {
+            return "".concat(acc).concat(part);
+        }
+        else if (acc.endsWith('/')) {
+            return "".concat(acc).concat(part.startsWith('/') ? part.substring(1) : part);
+        }
+        else {
+            return "".concat(acc).concat(part.startsWith('/') ? part : "/".concat(part));
+        }
+    });
+}export{Api,ApiError};
