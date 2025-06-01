@@ -1,4 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig, ResponseType } from 'axios';
+/********************************************************************************************************************
+ * ApiRequestData, ApiRequestOption, ApiRequestConfig
+ * ******************************************************************************************************************/
 export interface ApiRequestData {
     [key: string]: any;
 }
@@ -7,28 +10,34 @@ export interface ApiRequestOption {
     rawResponseType?: ResponseType;
     silent?: boolean;
 }
-export interface ApiRequestConfig extends AxiosRequestConfig {
+export interface ApiRequestConfig<D = ApiRequestData> extends AxiosRequestConfig<D> {
     silent?: boolean;
 }
-export declare class ApiError<T = any> extends Error {
+/********************************************************************************************************************
+ * ApiError
+ * ******************************************************************************************************************/
+export declare class ApiError<T = any, D = ApiRequestData> extends Error {
     code?: string;
-    config?: ApiRequestConfig;
+    config?: ApiRequestConfig<D>;
     baseUrl?: string;
     path?: string;
-    requestData?: ApiRequestData;
+    requestData?: D;
     requestOption?: ApiRequestOption;
-    response?: AxiosResponse<T>;
+    response?: AxiosResponse<T, D>;
     status?: number;
     isAxiosError: boolean;
     constructor(message?: string, code?: string);
 }
-export interface ApiOption<T = any> {
+/********************************************************************************************************************
+ * ApiOption
+ * ******************************************************************************************************************/
+export interface ApiOption<T = any, D = ApiRequestData> {
     baseUrl: string;
     timeParamName: string;
     withCredentials?: boolean;
     headers?: AxiosRequestConfig['headers'];
-    onRequest?(config: InternalAxiosRequestConfig, baseUrl: string, path: string, requestData?: ApiRequestData, requestOption?: ApiRequestOption): Promise<InternalAxiosRequestConfig>;
-    onResponse?(response: AxiosResponse<T>, config: AxiosRequestConfig, baseUrl: string, path: string, requestData?: ApiRequestData, requestOption?: ApiRequestOption): Promise<T>;
-    onError?(err: ApiError): void;
+    onRequest?(config: InternalAxiosRequestConfig<D>, baseUrl: string, path: string, requestData?: D, requestOption?: ApiRequestOption): Promise<InternalAxiosRequestConfig<D>>;
+    onResponse?(response: AxiosResponse<T, D>, config: AxiosRequestConfig<D>, baseUrl: string, path: string, requestData?: D, requestOption?: ApiRequestOption): Promise<T>;
+    onError?(err: ApiError<T, D>): void;
     dataKeysToLowerCase?: boolean;
 }

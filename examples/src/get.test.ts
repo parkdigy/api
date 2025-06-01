@@ -1,5 +1,4 @@
 import { Api, ApiOption, ApiError } from '../../src';
-import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 interface ResponseData {
   result: {
@@ -12,11 +11,11 @@ interface ResponseData {
 const option: ApiOption<ResponseData> = {
   baseUrl: 'http://localhost/api/v1',
   timeParamName: '_t_',
-  async onRequest(config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> {
+  async onRequest(config) {
     console.log('onRequest', config);
     return config;
   },
-  async onResponse(res: AxiosResponse) {
+  async onResponse(res) {
     const responseData = res.data;
     if (!responseData || responseData.result == null) {
       throw new ApiError('예상치 못한 오류가 발생했습니다.');
@@ -31,6 +30,6 @@ const option: ApiOption<ResponseData> = {
 };
 
 const api = new Api<ResponseData>(option);
-api.get('path/api').then((data) => {
+api.get('path/api', {test: 1}).then((data) => {
   console.log(data);
 });

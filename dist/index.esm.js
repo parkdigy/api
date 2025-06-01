@@ -81,7 +81,9 @@ function __generator(thisArg, body) {
 typeof SuppressedError === "function" ? SuppressedError : function (error, suppressed, message) {
     var e = new Error(message);
     return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
-};//--------------------------------------------------------------------------------------------------------------------
+};/********************************************************************************************************************
+ * ApiError
+ * ******************************************************************************************************************/
 var ApiError = /** @class */ (function (_super) {
     __extends(ApiError, _super);
     function ApiError(message, code) {
@@ -94,10 +96,14 @@ var ApiError = /** @class */ (function (_super) {
 }(Error));var _a;
 var AxiosCreate = axios.create ? axios.create : (_a = require('axios').default) === null || _a === void 0 ? void 0 : _a.create;
 var Api = /** @class */ (function () {
-    // constructor -------------------------------------------------------------------------------------------------------
+    /********************************************************************************************************************
+     * constructor
+     * ******************************************************************************************************************/
     function Api(option) {
         var _this = this;
-        // Run ---------------------------------------------------------------------------------------------------------------
+        /********************************************************************************************************************
+         * run
+         * ******************************************************************************************************************/
         this.run = function (method, path, data, option) {
             return new Promise(function (resolve, reject) {
                 var _a;
@@ -187,8 +193,7 @@ var Api = /** @class */ (function () {
                     .then(function (res) {
                     var resData = res.data;
                     if (_this.option.onResponse) {
-                        _this.option
-                            .onResponse(res, requestConfig, _this.option.baseUrl, path, data, option)
+                        _this.option.onResponse(res, requestConfig, _this.option.baseUrl, path, data, option)
                             .then(function (finalResData) {
                             resolve(finalResData);
                         })

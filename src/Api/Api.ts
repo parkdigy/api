@@ -1,39 +1,43 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig, Method } from 'axios';
 import { ApiError, ApiRequestData, ApiOption, ApiRequestOption, ApiRequestConfig } from './Api.types';
-import { notEmpty, urlJoin } from '@pdg/util';
+import { Dict, notEmpty, urlJoin } from '@pdg/util';
 
 const AxiosCreate = axios.create ? axios.create : require('axios').default?.create;
 
-class Api<T = any> {
+class Api<T = any, D extends ApiRequestData = {}> {
   option: ApiOption;
 
-  // constructor -------------------------------------------------------------------------------------------------------
+  /********************************************************************************************************************
+   * constructor
+   * ******************************************************************************************************************/
 
   constructor(option: ApiOption<T>) {
     this.option = option;
   }
 
-  get(path: string, data?: ApiRequestData, option?: ApiRequestOption): Promise<T> {
+  get(path: string, data?: D, option?: ApiRequestOption): Promise<T> {
     return this.run('get', path, data, option);
   }
 
-  post(path: string, data?: ApiRequestData, option?: ApiRequestOption): Promise<T> {
+  post(path: string, data?: D, option?: ApiRequestOption): Promise<T> {
     return this.run('post', path, data, option);
   }
 
-  patch(path: string, data?: ApiRequestData, option?: ApiRequestOption): Promise<T> {
+  patch(path: string, data?: D, option?: ApiRequestOption): Promise<T> {
     return this.run('patch', path, data, option);
   }
 
-  delete(path: string, data?: ApiRequestData, option?: ApiRequestOption): Promise<T> {
+  delete(path: string, data?: D, option?: ApiRequestOption): Promise<T> {
     return this.run('delete', path, data, option);
   }
 
-  // Run ---------------------------------------------------------------------------------------------------------------
+  /********************************************************************************************************************
+   * run
+   * ******************************************************************************************************************/
 
-  run = (method: Method, path: string, data?: ApiRequestData, option?: ApiRequestOption): Promise<T> => {
+  run = (method: Method, path: string, data?: D, option?: ApiRequestOption): Promise<T> => {
     return new Promise<T>((resolve, reject) => {
-      const headers: ApiRequestConfig['headers'] = { ...this.option.headers };
+      const headers: ApiRequestConfig<D>['headers'] = { ...this.option.headers };
 
       if (typeof window !== 'undefined') {
         if (window?.location?.href) {
@@ -41,7 +45,7 @@ class Api<T = any> {
         }
       }
 
-      const requestConfig: ApiRequestConfig = {
+      const requestConfig: ApiRequestConfig<D> = {
         method,
         withCredentials: this.option.withCredentials,
         headers,
@@ -56,7 +60,7 @@ class Api<T = any> {
       if (data) {
         if (method === 'get') {
           if (notEmpty(data)) {
-            const finalData: ApiRequestData = {};
+            const finalData: Dict = {};
             finalData[this.option.timeParamName] = new Date().getTime();
             for (const key in data) {
               if (data[key] != null) {
@@ -70,14 +74,14 @@ class Api<T = any> {
             data.append(this.option.timeParamName, `${new Date().getTime()}`);
             requestConfig.data = data;
           } else {
-            const finalData: ApiRequestData = { ...data };
+            const finalData: Dict = { ...data };
             finalData[this.option.timeParamName] = new Date().getTime();
-            requestConfig.data = finalData;
+            requestConfig.data = finalData as D;
           }
         }
       }
 
-      const setErrorInfo = (err: ApiError, status?: number, response?: AxiosResponse) => {
+      const setErrorInfo = (err: ApiError<T, D>, status?: number, response?: AxiosResponse<T, D>) => {
         err.config = requestConfig;
         err.baseUrl = this.option.baseUrl;
         err.path = path;
@@ -88,7 +92,7 @@ class Api<T = any> {
       };
 
       const fireError = (err: any): void => {
-        const apiError: ApiError = new ApiError();
+        const apiError: ApiError<T, D> = new ApiError<T, D>();
 
         if (typeof err === 'object') {
           apiError.message = err.message;
@@ -118,16 +122,15 @@ class Api<T = any> {
       }
 
       instance
-        .request<T>(requestConfig)
+        .request<T, AxiosResponse<T, D>, D>(requestConfig)
         .then((res) => {
           const { data: resData } = res;
           if (this.option.onResponse) {
-            this.option
-              .onResponse(res, requestConfig, this.option.baseUrl, path, data, option)
+            this.option.onResponse(res, requestConfig, this.option.baseUrl, path, data, option)
               .then((finalResData) => {
                 resolve(finalResData);
               })
-              .catch((err: ApiError) => {
+              .catch((err: ApiError<T, D>) => {
                 setErrorInfo(err, res.status, res);
                 fireError(err);
               });

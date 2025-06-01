@@ -1,7 +1,7 @@
 {
   "name": "@pdg/api",
   "title": "API Module",
-  "version": "1.0.19",
+  "version": "1.0.21",
   "description": "API Module",
   "type": "module",
   "types": "dist/index.d.ts",
@@ -35,9 +35,9 @@
     "typescript",
     "javascript"
   ],
-  "peerDependencies": {
-    "@pdg/util": ">=1.0.23",
-    "axios": ">=1.0.0"
+  "dependencies": {
+    "@pdg/util": "^1.0.24",
+    "axios": "^1.9.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.24.0",
