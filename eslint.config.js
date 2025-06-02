@@ -1,33 +1,36 @@
 import { defineConfig } from 'eslint/config';
-import tsPlugin from '@typescript-eslint/eslint-plugin';
-import tsParser from '@typescript-eslint/parser';
-import js from '@eslint/js';
+import eslint from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import typescriptEslintParser from '@typescript-eslint/parser';
 
 export default defineConfig([
-  js.configs.recommended,
+  ...tseslint.config(eslint.configs.recommended, tseslint.configs.recommended),
   {
-    files: ['./src/**/*.ts'],
+    ignores: ['node_modules/', 'dist/'],
+    files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
-      parser: tsParser,
+      parser: typescriptEslintParser,
       parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
         ecmaVersion: 'latest',
         sourceType: 'module',
       },
-    },
-    plugins: {
-      '@typescript-eslint': tsPlugin,
+      globals: {
+        // Add any other specific global variables if needed, e.g.,
+        // process: 'readonly',
+      },
     },
     rules: {
-      'no-undef': 'off',
       'no-unused-vars': 'off',
-      'no-redeclare': 'off',
-      '@typescript-eslint/no-unused-expressions': 'off',
-      '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-empty-interface': 'off',
       'no-underscore-dangle': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-var-requires': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/no-unused-expressions': 'off',
       '@typescript-eslint/no-unused-vars': ['warn'],
+      'no-empty-pattern': 'off',
       'no-useless-constructor': ['warn'],
       'no-plusplus': ['error'],
       'prefer-template': ['error'],
@@ -39,7 +42,13 @@ export default defineConfig([
           ignoreReadBeforeAssign: false,
         },
       ],
+      'lines-between-class-members': [
+        'error',
+        'always',
+        {
+          exceptAfterSingleLine: true,
+        },
+      ],
     },
-    ignores: ['**/node_modules'],
   },
 ]);
