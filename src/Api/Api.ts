@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig, Method } from 'axios';
 import { ApiError, ApiRequestData, ApiOption, ApiRequestOption, ApiRequestConfig } from './Api.types';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const AxiosCreate = axios.create ? axios.create : require('axios').default?.create;
 
 class Api<T = any, D extends ApiRequestData = {}> {
