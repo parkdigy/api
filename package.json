@@ -1,8 +1,8 @@
 {
-  "name": "@pdg/npm-template",
-  "title": "NPM Template",
-  "description": "NPM Template",
-  "version": "1.0.0",
+  "name": "@pdg/api",
+  "title": "Typescript API Module",
+  "description": "Typescript API Module",
+  "version": "1.0.25",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
@@ -16,13 +16,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/parkdigy/npm-template.git",
-    "baseUrl": "https://github.com/parkdigy/npm-template"
+    "url": "git+https://github.com/parkdigy/api.git",
+    "baseUrl": "https://github.com/parkdigy/api"
   },
   "bugs": {
-    "url": "https://github.com/parkdigy/npm-template/issues"
+    "url": "https://github.com/parkdigy/api/issues"
   },
-  "homepage": "https://github.com/parkdigy/npm-template#readme",
+  "homepage": "https://github.com/parkdigy/api#readme",
   "files": [
     "dist",
     "README.md"
@@ -50,6 +50,9 @@
     "typescript",
     "javascript"
   ],
+  "dependencies": {
+    "axios": "^1.13.2"
+  },
   "devDependencies": {
     "@eslint/js": "9.39.1",
     "@rollup/plugin-commonjs": "29.0.0",

@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES2017",
     "module": "ESNext",
-    "lib": ["ES2017"],
+    "lib": ["DOM", "DOM.Iterable", "ES2017"],
     "moduleResolution": "node",
     "declaration": true,
     "declarationDir": "dist",

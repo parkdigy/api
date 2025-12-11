@@ -1,8 +1,8 @@
-# @pdg/npm-template
+# @pdg/api
 
-NPM Template
+Typescript API Module
 
 ## 설치
 ```
-npm install -D @pdg/npm-template
+npm install -D @pdg/api
 ```
