@@ -1,5 +1,11 @@
-import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig, Method } from 'axios';
-import { ApiError, ApiRequestData, ApiOption, ApiRequestOption, ApiRequestConfig } from './Api.types';
+import axios, { type AxiosInstance, type AxiosResponse, type InternalAxiosRequestConfig, type Method } from 'axios';
+import {
+  ApiError,
+  type ApiRequestData,
+  type ApiOption,
+  type ApiRequestOption,
+  type ApiRequestConfig,
+} from './Api.types';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const AxiosCreate = axios.create ? axios.create : require('axios').default?.create;

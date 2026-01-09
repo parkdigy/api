@@ -1,5 +1,5 @@
-import { Method } from 'axios';
-import { ApiRequestData, ApiOption, ApiRequestOption } from './Api.types';
+import { type Method } from 'axios';
+import { type ApiRequestData, type ApiOption, type ApiRequestOption } from './Api.types';
 declare class Api<T = any, D extends ApiRequestData = {}> {
     option: ApiOption;
     /********************************************************************************************************************

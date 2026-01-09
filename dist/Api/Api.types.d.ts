@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig, ResponseType } from 'axios';
+import { type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig, type ResponseType } from 'axios';
 /********************************************************************************************************************
  * ApiRequestData, ApiRequestOption, ApiRequestConfig
  * ******************************************************************************************************************/

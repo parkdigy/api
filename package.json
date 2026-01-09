@@ -2,7 +2,7 @@
   "name": "@pdg/api",
   "title": "Typescript API Module",
   "description": "Typescript API Module",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.esm.js",
