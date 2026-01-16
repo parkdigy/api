@@ -8,6 +8,7 @@ declare class Api<T = any, D extends ApiRequestData = {}> {
     constructor(option: ApiOption<T>);
     get(path: string, data?: D, option?: ApiRequestOption): Promise<T>;
     post(path: string, data?: D, option?: ApiRequestOption): Promise<T>;
+    put(path: string, data?: D, option?: ApiRequestOption): Promise<T>;
     patch(path: string, data?: D, option?: ApiRequestOption): Promise<T>;
     delete(path: string, data?: D, option?: ApiRequestOption): Promise<T>;
     /********************************************************************************************************************

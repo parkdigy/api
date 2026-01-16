@@ -135,6 +135,9 @@ class Api {
     post(path, data, option) {
         return this.run('post', path, data, option);
     }
+    put(path, data, option) {
+        return this.run('put', path, data, option);
+    }
     patch(path, data, option) {
         return this.run('patch', path, data, option);
     }

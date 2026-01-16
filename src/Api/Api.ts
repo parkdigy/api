@@ -29,6 +29,10 @@ class Api<T = any, D extends ApiRequestData = {}> {
     return this.run('post', path, data, option);
   }
 
+  put(path: string, data?: D, option?: ApiRequestOption): Promise<T> {
+    return this.run('put', path, data, option);
+  }
+
   patch(path: string, data?: D, option?: ApiRequestOption): Promise<T> {
     return this.run('patch', path, data, option);
   }
