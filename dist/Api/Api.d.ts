@@ -1,11 +1,11 @@
 import { type Method } from 'axios';
 import { type ApiRequestData, type ApiOption, type ApiRequestOption } from './Api.types';
 declare class Api<T = any, D extends ApiRequestData = {}> {
-    option: ApiOption;
+    option: ApiOption<T, D>;
     /********************************************************************************************************************
      * constructor
      * ******************************************************************************************************************/
-    constructor(option: ApiOption<T>);
+    constructor(option: ApiOption<T, D>);
     get(path: string, data?: D, option?: ApiRequestOption): Promise<T>;
     post(path: string, data?: D, option?: ApiRequestOption): Promise<T>;
     put(path: string, data?: D, option?: ApiRequestOption): Promise<T>;

@@ -2,7 +2,7 @@
 
 ## 프로젝트
 
-TypeScript 라이브러리를 npm 패키지로 만들기 위한 템플릿이다. 현재 공개 기능은 없으며 `src/index.ts`는 빈 내보내기만 가진다. 서비스나 웹 애플리케이션을 전제로 설계하지 않는다.
+Axios 기반 API 요청 라이브러리를 제공하는 TypeScript npm 패키지다. `src/index.ts`에서 `Api`, `ApiError`와 관련 타입을 공개한다. 서비스나 웹 애플리케이션을 전제로 설계하지 않는다.
 
 - 구현과 공개 API: `src/`, `src/index.ts`
 - 동작 검증: `test/`

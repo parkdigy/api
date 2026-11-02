@@ -11,13 +11,13 @@ import {
 const AxiosCreate = axios.create ? axios.create : require('axios').default?.create;
 
 class Api<T = any, D extends ApiRequestData = {}> {
-  option: ApiOption;
+  option: ApiOption<T, D>;
 
   /********************************************************************************************************************
    * constructor
    * ******************************************************************************************************************/
 
-  constructor(option: ApiOption<T>) {
+  constructor(option: ApiOption<T, D>) {
     this.option = option;
   }
 
