@@ -41,6 +41,8 @@ examples/src/example.ts ─ tsx ─ 콘솔 예제
 - Rollup은 `dependencies`와 `peerDependencies`를 외부 의존성으로 처리하도록 구성돼 있다. 의존성 추가 시 번들 포함 여부와 소비자 설치 책임을 확인한다.
 - 타입 선언은 `dist/`에 생성된다. Rollup의 사용자 플러그인은 `.private`로 끝나는 디렉터리와 `.private.d.ts` 파일을 제거한다. 공개 선언이 삭제 대상 타입을 참조하지 않는지 확인한다. 이는 런타임 코드의 접근 제한 기능이 아니다.
 - TypeScript는 ES2017, ESNext 모듈, `strict`, `noImplicitAny`, `verbatimModuleSyntax`를 사용한다. 타입 전용 의존성에는 `import type` / `export type`을 사용한다.
+- TypeScript 6의 `moduleResolution: bundler`를 사용하며, 이전 `baseUrl: ./src`를 통한 절대 경로 해석은 사용하지 않는다. 테스트 설정은 Jest와 Node 전역 타입을 명시한다.
+- `@rollup/plugin-eslint`의 peer dependency 때문에 ESLint와 `@eslint/js`는 9.x를 사용한다. ESLint 9는 지원이 종료됐으므로 플러그인의 ESLint 10 지원 여부를 확인해 함께 갱신해야 한다. TypeScript는 `ts-jest`와 `typescript-eslint`의 지원 범위에 맞춰 6.x를 사용한다.
 - 루트 타입 검사는 `src/`만 대상으로 한다. 예제와 테스트의 전체 검증을 대신하지 않는다.
 - `npm run lint`는 `src/**/*.ts`만 검사한다. Rollup은 경고에도 실패하도록 설정돼 있으므로 lint 명령 성공만으로 번들 성공을 보장하지 않는다.
 
