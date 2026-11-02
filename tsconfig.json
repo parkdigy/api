@@ -2,10 +2,12 @@
   "compilerOptions": {
     "target": "ES2017",
     "module": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ES2017"],
-    "moduleResolution": "node",
+    "lib": ["DOM", "DOM.Iterable", "ES2018"],
+    "moduleResolution": "bundler",
+    "types": ["node"],
     "declaration": true,
     "declarationDir": "dist",
+    "rootDir": "src",
     "noImplicitAny": true,
     "esModuleInterop": true,
     "allowImportingTsExtensions": false,
@@ -16,8 +18,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "outDir": "dist",
-    "baseUrl": "./src"
+    "outDir": "dist"
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "test", "dist", "src/**/*.test.ts", "src/**/*.test.tsx", "examples", "rollup.config.js"]
